@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="${contextPath}/" />
+    <meta charset="utf-8">
+    <title>国际学院学生数据管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+
+    <!-- The styles -->
+    <link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
+
+    <link href="css/charisma-app.css" rel="stylesheet">
+    <link href='bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+    <link href='bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+    <link href='bower_components/chosen/chosen.min.css' rel='stylesheet'>
+    <link href='bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
+    <link href='bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
+    <link href='bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
+    <link href='css/jquery.noty.css' rel='stylesheet'>
+    <link href='css/noty_theme_default.css' rel='stylesheet'>
+    <link href='css/elfinder.min.css' rel='stylesheet'>
+    <link href='css/elfinder.theme.css' rel='stylesheet'>
+    <link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
+    <link href='css/uploadify.css' rel='stylesheet'>
+    <link href='css/animate.min.css' rel='stylesheet'>
+
+    <!-- jQuery -->
+    <script src="bower_components/jquery/jquery.min.js"></script>
+
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+</head>
+
+<body>
+    <!-- topbar starts -->
+	<#include "commonPage/top.ftl">
+	<!-- topbar ends -->
+	<div class="ch-container">
+		<div class="row">
+
+			<!-- left menu starts -->
+			<#include "commonPage/left.ftl">
+			<!--/span-->
+			<!-- left menu ends -->
+
+
+        <div id="content" class="col-lg-10 col-sm-10">
+            <!-- content starts -->
+             
+    <div class="row">
+    <div class="box col-md-12">
+    <div class="box-inner">
+    <div class="box-header well" data-original-title="">
+        <h2><i class="glyphicon glyphicon-user"></i> 添加用户 </h2>
+
+
+    </div>
+    <div class="box-content">
+	
+	<form name="form" method="post" action="user/addUser">
+	<table style="margin-left:20px;">
+		<tr>
+			<td style="font-weight:bold;">用户名 :</td>
+			<td><input type="text"  class="form-control" id="username" name="username"  ></td>
+		</tr>
+		<tr>
+			<td  style="font-weight:bold;">密码 :</td>
+			<td> <input type="password" class="form-control" id="password" name="password"></td>
+		</tr>
+		<tr>
+			<td  style="font-weight:bold;">重复密码 :</td>
+			<td> <input type="password" class="form-control" id="password2" name="password2"></td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold;">等级 ：</td>
+			<td>
+				<select name="status" id="status" style="width:120px;" >
+					<option  value="1">普通管理员</option>
+					<option  value="0">超级管理员</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td style="font-weight:bold;"> 
+				<button type="button"  onclick="javascript:add();" class="btn btn-default" >添加</button>
+			</td>
+			<td>
+				<button type="button"  onclick="self.location.href='${contextPath}/user/list'" class="btn btn-default" >返回</button>
+			</td>
+		</tr>
+	</table>
+     </div>
+     </FORM>
+    
+    </div>
+    </div>
+    </div>
+    <!--/span-->
+
+    </div><!--/row-->
+
+
+
+    <!-- content ends -->
+    </div><!--/#content.col-md-0-->
+</div><!--/fluid-row-->
+
+    <!-- Ad, you can remove it -->
+
+    <!-- Ad ends -->
+
+    <hr>
+
+
+
+
+
+</div><!--/.fluid-container-->
+
+<!-- external javascript -->
+
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- library for cookie management -->
+<script src="js/jquery.cookie.js"></script>
+<!-- calender plugin -->
+<script src='bower_components/moment/min/moment.min.js'></script>
+<script src='bower_components/fullcalendar/dist/fullcalendar.min.js'></script>
+<!-- data table plugin -->
+<script src='js/jquery.dataTables.min.js'></script>
+
+<!-- select or dropdown enhancer -->
+<script src="bower_components/chosen/chosen.jquery.min.js"></script>
+<!-- plugin for gallery image view -->
+<script src="bower_components/colorbox/jquery.colorbox-min.js"></script>
+<!-- notification plugin -->
+<script src="js/jquery.noty.js"></script>
+<!-- library for making tables responsive -->
+<script src="bower_components/responsive-tables/responsive-tables.js"></script>
+<!-- tour plugin -->
+<script src="bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
+<!-- star rating plugin -->
+<script src="js/jquery.raty.min.js"></script>
+<!-- for iOS style toggle switch -->
+<script src="js/jquery.iphone.toggle.js"></script>
+<!-- autogrowing textarea plugin -->
+<script src="js/jquery.autogrow-textarea.js"></script>
+<!-- multiple file upload plugin -->
+<script src="js/jquery.uploadify-3.1.min.js"></script>
+<!-- history.js for cross-browser state change on ajax -->
+<script src="js/jquery.history.js"></script>
+<!-- application script for Charisma demo -->
+<script src="js/charisma.js"></script>
+<script type="text/javascript" src="js/checkInput.js"></script>
+<script type="text/javascript">
+	function add(){
+	var username = $("#username").val();
+	var password = $("#password").val();
+	var password2 = $("#password2").val();
+	var status =$("#status  option:selected").val();
+	if(username==''||password==''||status==''||
+			username==null||password==null||status==null){
+		alert("信息不能为空");
+		return false;
+	}else if(password2 != password){
+		alert("两次密码不相同！");
+		return false;
+	}else{
+		 $.ajax({
+			type:"post",
+			url:"user/judgeUser",
+			data:{
+				userName:username
+			},
+			dataType:"json",
+			success: function(data){
+				if(data.status == 0){
+					form.submit();
+				}else{
+					alert("用户已存在！");
+					return false;
+				}
+			}
+		 });
+	}	
+	
+}
+
+</script>
+
+</body>
+</html>

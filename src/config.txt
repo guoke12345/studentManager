@@ -1,0 +1,4 @@
+jdbcUrl = jdbc:mysql://localhost:3306/stu_manager?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+user = root
+password = 000000
+devMode = false

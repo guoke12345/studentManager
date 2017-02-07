@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="${contextPath}/" />
+<meta charset="utf-8">
+<title>国际学院学生数据管理</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+<meta name="author" content="Muhammad Usman">
+
+<!-- The styles -->
+<link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
+
+<link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
+<link href="css/charisma-app.css" rel="stylesheet">
+<link href='bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+<link href='bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+<link href='bower_components/chosen/chosen.min.css' rel='stylesheet'>
+<link href='bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
+<link href='bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
+<link href='bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
+<link href='css/jquery.noty.css' rel='stylesheet'>
+<link href='css/noty_theme_default.css' rel='stylesheet'>
+<link href='css/elfinder.min.css' rel='stylesheet'>
+<link href='css/elfinder.theme.css' rel='stylesheet'>
+<link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
+<link href='css/jquery.dataTables.min.css' rel='stylesheet'>
+<link href='css/uploadify.css' rel='stylesheet'>
+<link href='css/animate.min.css' rel='stylesheet'>
+<link href='css/tableTools.css' rel='stylesheet'>
+<link rel="stylesheet" media="screen" type="text/css" href="css/datepicker.css" />
+<style type="text/css">
+	table.dataTable thead td {
+		padding: 10px 18px;
+		border-bottom: 1px solid #111111;
+	}
+	
+	table.dataTable tfoot th, table.dataTable tfoot td {
+		padding: 10px 18px 6px 18px;
+		border-top: 1px solid #111111;
+	}
+	
+	table.dataTable.no-footer {
+		border-bottom: 1px solid #111111;
+	}
+	
+	.dataTables_wrapper.no-footer .dataTables_scrollBody {
+		border-bottom: 1px solid #111111;
+	}
+</style>
+<!-- jQuery -->
+<script src="bower_components/jquery/jquery.min.js"></script>
+
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<!-- The fav icon -->
+<link rel="shortcut icon" href="img/favicon.ico">
+
+</head>
+
+<body>
+	<!-- topbar starts -->
+	<#include "commonPage/top.ftl">
+	<!-- topbar ends -->
+	<div class="ch-container">
+		<div class="row">
+
+			<!-- left menu starts -->
+			<#include "commonPage/left.ftl">
+			<!-- left menu ends -->
+
+			<noscript>
+				<div class="alert alert-block col-md-12">
+					<h4 class="alert-heading">Warning!</h4>
+
+					<p>
+						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+							target="_blank">JavaScript</a> enabled to use this site.
+					</p>
+				</div>
+			</noscript>
+
+			<div id="content" class="col-lg-10 col-sm-10">
+				<!-- content starts -->
+				<div></div>
+
+				<!--/学生基本信息显示-->
+				<div class="row">
+					<div class="box col-md-12">
+						<div class="box-inner">
+							<div class="box-header well" data-original-title="">
+								<h2>
+									<i class="glyphicon glyphicon-user"></i>项目信息
+								</h2>
+								<!--<div class="box-icon">
+            <a href="#" class="btn btn-setting btn-round btn-default"><i class="glyphicon glyphicon-cog"></i></a>
+            <a href="#" class="btn btn-minimize btn-round btn-default"><i
+                    class="glyphicon glyphicon-chevron-up"></i></a>
+            <a href="#" class="btn btn-close btn-round btn-default"><i class="glyphicon glyphicon-remove"></i></a>
+        </div>-->
+							</div>
+							<div class="control-group" style="margin-left: 10px">
+								<div><br></div>
+								<div class="controls">
+									<div>
+										<!-- <span style="color:red;">*&nbsp;</span> --><select data-placeholder="项目" id="projectSelect"	data-rel="chosen" name="project_id"> 
+										<option selected="0" value="0"></option>
+										<#assign statu=0> 
+										<#list projectList as plist> 
+										<#if plist.pl_id !=statu>
+										<optgroup label="${plist.pl_name}">
+											<#assign statu=plist.pl_id> </#if>
+											<option value="${plist.pr_id!}">${plist.pr_name!}</option>
+											<#if plist.pl_id != statu>
+										</optgroup> </#if> </#list>
+									</select>
+									
+									<select name="major_id" id="majorSelect" data-rel="chosen"	onchange="showMsg()" style="width: 90px;" data-placeholder="专业">
+										 <#list marjorList as mlist>
+										<option selected="selected" value=""></option>
+										<option value="${mlist.m_id!}" class="major"> ${mlist.simpleName!}</option>
+										</#list>
+									</select> 
+									
+									<select name="classes_id" id="classesSelect" style="width: 90px;"  placeholder="班级">
+										<option selected="selected" value="">班级</option>
+									</select>
+									</div>
+									
+									<br>
+									
+									<!-- <div>
+										<input type="radio" name="time" id="time" value="1" >
+										<select style="width:120px;" data-placeholder="学期" id="termSelect"	data-rel="chosen" name="project_id" onchange="showZhou()"> 
+											<option selected="selected" value=0>  </option>
+											<#list dateList as list>
+													<option  value="${list.Id!}">${list.term!}</option>
+											</#list>
+										</select>
+										<#list dateList as list>
+											<input id="term_${list.Id}" class="" type="hidden" value="${list.termDate!}">
+										</#list>
+									<span>第</span>
+									<select  id="zhouSelect"  name="project_id"> 
+										<option selected="selected" value="0">&nbsp;&nbsp;&nbsp;&nbsp;</option>
+									</select>
+									<span>周</span>
+									</div> -->
+									<br>
+									<div>
+										<input type="radio" name="time" id="time" value="0" checked>
+										<input class="laydate-icon" id="beginTime" > ——
+										<input class="laydate-icon" id="endTime">
+									</div>
+									
+								  	<div id="resText"></div>
+									<div class="mc_embed_signup">
+										<div style="margin-top: 10px">
+											<div class="clear">
+												<input onclick="findInfo()" style="width: 20px" type="submit" value="查找" name="subscribe" class="button">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="box-content">
+								<table id="example" style="border:1px #dddddd solid;"  class="table table-striped table-bordered bootstrap-datatable  responsive">
+									<thead>
+										<tr>
+											<th>姓名</th>
+											<th>班级</th>
+											<th>加分</th>
+											<th>扣分</th>
+											<th>总得分</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="tbody" >
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!--/span-->
+
+				</div>
+				<!--/row-->
+
+
+
+				<!-- content ends -->
+			</div>
+			<!--/#content.col-md-0-->
+		</div>
+		<!--/fluid-row-->
+
+		<!-- Ad, you can remove it -->
+
+		<!-- Ad ends -->
+
+		<hr>
+
+
+
+
+
+	</div>
+	<!--/.fluid-container-->
+
+	<!-- external javascript -->
+	<script type="text/javascript" src="js/laydate.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src='bower_components/moment/min/moment.min.js'></script>
+	<script src='bower_components/fullcalendar/dist/fullcalendar.min.js'></script>
+	<script src="bower_components/chosen/chosen.jquery.min.js"></script>
+	<script src="bower_components/colorbox/jquery.colorbox-min.js"></script>
+	<script src="js/jquery.noty.js"></script>
+	<script src="bower_components/responsive-tables/responsive-tables.js"></script>
+	<script	src="bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
+	<script src="js/jquery.raty.min.js"></script>
+	<script src='js/jquery.dataTables.min.js'></script>
+	<script src="js/tableTools.js"></script>
+	<script src="js/jquery.iphone.toggle.js"></script>
+	<script src="js/jquery.autogrow-textarea.js"></script>
+	<script src="js/jquery.uploadify-3.1.min.js"></script>
+	<script src="js/jquery.history.js"></script>
+	<script src="js/charisma.js"></script>  
+	<script type="text/javascript" src="js/datepicker.js"></script>
+	<script type="text/javascript">
+	
+	/**
+	* 删除信息
+	*/
+	function deleteInfo(id){
+		if(confirm("确定要删除信息么?")){
+			window.location.href = "info/delete?id=" +id;
+		}
+	}
+	/**
+	*专业班级下拉框
+	*/
+		function showMsg(obj) {
+		 	$.ajax({
+				type : "post",
+				url : "info/getClassesWithM_id",
+				data : {
+					m_id : $("#majorSelect").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#classesSelect").empty();
+					$("#classesSelect").append("<option selected='selected' value=''></option>");
+					for(var i = 0; i < data.length; i++){
+						$("#classesSelect").append("<option  value='"+data[i].cid+"'>"+data[i].cname+"</option>");
+					}
+					
+				}
+			}); 
+		}
+	/**
+	*周的下拉框
+	*
+	*/
+ 		function showZhou() {
+		 	$.ajax({
+				type : "post",
+				url : "stu/getZhou",
+				data : {
+					id : $("#termSelect").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#zhouSelect").empty();
+					$("#zhouSelect").append("<option  selected='selected' value=1>  </option>");
+					for(var i = 0; i < data.length; i++){
+						$("#zhouSelect").append("<option  value='"+data[i]+"'>"+ (i+1) +"</option>");   
+					}
+					
+				}
+			}); 
+		} 
+		/**
+		*表格初始化
+		*/
+		$(document).ready(function() {
+			$.ajax({
+				type : "post",
+				url : "stu/getZhou",
+				data : {
+					id : $("#termSelect").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#zhouSelect").empty();
+					$("#zhouSelect").append("<option  selected='selected' value=1>  </option>");
+					for(var i = 0; i < data.length; i++){
+						$("#zhouSelect").append("<option  value='"+data[i]+"'>"+ (i+1) +"</option>");   
+					}
+					
+				}
+			}); 
+			
+			 $("#example").dataTable({
+				 "language": {
+					 "url" : "commonPage/language.txt",
+				    },
+				 	"dom": 'T<"clear">lfrtip',
+				 	 "tableTools": {
+				 		"sSwfPath": "images/copy_csv_xls_pdf.swf",
+		 	            "aButtons": [
+		 	                {
+		 	                    "sExtends": "csv",
+		 	                    "sButtonText": "导出表格"
+		 	                },
+		 	            ]
+		 	        }, 
+			 });
+		 } ); 
+		/*
+		*查找项目信息
+		*/
+			function findInfo(){
+			if($("#projectSelect").val() == "0"){
+				alert("请选择项目信息");
+				return false;
+			}else{
+				var beginTime = "";
+				var endTime = "";
+				var p_id = $("#projectSelect").val();
+				if($("input[name='time']:checked").val() == 0){
+					  beginTime = $("#beginTime").val();
+					  endTime = $("#endTime").val();
+				}else{
+					 var time = $("#zhouSelect").val();
+					 var id = $("#termSelect").val();  
+					 if(time==0||id==0){
+						 alert("请选择时间！");
+					 }else{
+						 if(time==1){
+							 //获取学期时间
+								var term_id = "term_"+id;
+								var termTime = document.getElementById(term_id).value;
+								beginTime = termTime.split('|')[0];
+								endTime = termTime.split('|')[1];
+						 }else{
+							 console.log(time);
+							 beginTime = time.split('|')[0];
+							 endTime = time.split('|')[1];
+						 }
+					 }
+				}
+				if(beginTime==null||endTime==null||beginTime==""||endTime==""){
+					console.log("日期为空！");
+					return false;
+				}
+					$("#example").dataTable().fnDestroy();   
+			 	    $('#example').dataTable( {
+			 	    	language: {
+			 	    		"url" : "commonPage/language.txt",
+						    },
+			 	    	 dom: 'T<"clear">lfrtip',
+			 	    	 "tableTools": {
+			 	    		"sSwfPath": "images/copy_csv_xls_pdf.swf",
+			 	            "aButtons": [
+			 	                {
+			 	                    "sExtends": "csv",
+			 	                    "sButtonText": "导出表格"
+			 	                },
+			 	            ]
+			 	        },
+		 	    	   "ajax":{
+		 	    		 url:'info/getInfo',
+		 	    		 data:{
+		 	    			m_id : $("#majorSelect").val(),
+							c_id : $("#classesSelect").val(),
+							p_id : $("#projectSelect").val(),
+							beginTime :beginTime,
+							endTime:endTime
+		 	    		 },
+		 	    	   },
+		 	    	  "columns": [
+						{ "data": "stuname" },
+						{ "data": "classes" },
+						{ "data": "sum_add" },
+						{ "data": "sum_sub" },
+						{ "data": "count_grade" },
+						{ "data": "s_id" }    
+	   		        ] ,
+	   		     "columnDefs" : [ 
+	   		                  {
+			          		        "render" : function(data, type, row) {
+			          		          return "<td class='center' width='260px'><p style='color:green;'><b>"+data+"</b></p></td>";
+			          		        },
+			          		        "targets" : 2
+			          		      },
+		          		    	{
+			          		        "render" : function(data, type, row) {
+			          		          return "<td class='center' width='260px'><p style='color:red;'><b>"+data+"</b></p></td>";
+			          		        },
+			          		        "targets" : 3
+			          		      },
+			          		    {
+			          		        "render" : function(data, type, row) {
+			          		        	return "<tr><td class='center' width='260px'>"+
+			           		          	"<a class='btn btn-success' title='查看' "+
+			           		          			"href='info/countStudentProjrctInfo?stu_id="+data+"&p_id="+p_id+"&beginTime="+beginTime+"&endTime="+endTime+"  '> "+
+			           		        		  "<i class='glyphicon glyphicon-zoom-in'></i>查看</a></td></tr>";
+			           		        		  },
+			          		        "targets" : 5
+			          		      }
+	   		      ],
+			   	 } ); 
+				 } 			
+			}
+			$('#beginTime').DatePicker({
+				format:'Y-m-d',
+			 	date: $('#beginTime').val(),
+				current: $('#beginTime').val(),
+				starts: 1,
+				position: 'r',
+				onBeforeShow: function(){
+					$('#beginTime').DatePickerSetDate($('#beginTime').val(), true);
+				},
+				onChange: function(formated, dates){
+					$('#beginTime').val(formated);
+				}
+			});
+			!function(){
+				laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+				laydate({elem: '#beginTime'});//绑定元素
+			}();
+			!function(){
+				laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
+				laydate({elem: '#endTime'});//绑定元素
+			}();
+	/*
+	*   导出新表格
+	**/
+	 
+	</script>
+</body>
+</html>

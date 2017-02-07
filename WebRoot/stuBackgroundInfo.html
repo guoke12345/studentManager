@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="${contextPath}/" />
+<meta charset="utf-8">
+<title>国际学院学生数据管理</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+<meta name="author" content="Muhammad Usman">
+<!-- The styles -->
+<link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
+<link href="css/charisma-app.css" rel="stylesheet">
+<link href='bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+<link href='bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+<link href='bower_components/chosen/chosen.min.css' rel='stylesheet'>
+<link href='bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
+<link href='bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
+<link href='bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
+<link href='css/jquery.noty.css' rel='stylesheet'>
+<link href='css/noty_theme_default.css' rel='stylesheet'>
+<link href='css/elfinder.min.css' rel='stylesheet'>
+<link href='css/elfinder.theme.css' rel='stylesheet'>
+<link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
+<link href='css/jquery.dataTables.min.css' rel='stylesheet'>
+<link href='css/uploadify.css' rel='stylesheet'>
+<link href='css/animate.min.css' rel='stylesheet'>
+<!-- jQuery -->
+<script src="bower_components/jquery/jquery.min.js"></script>
+
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<!-- The fav icon -->
+<link rel="shortcut icon" href="img/favicon.ico">
+
+<style type="text/css">
+.td_name{border-left:1px #dddddd solid;text-align:right;width:15%;font-weight:bold;}
+.td_value{text-align:center;}
+  .ullicss {text-align:center;margin:0px;padding:0px;}
+  .ullicss ul{list-style:none;border:1px solid #E6E6E6;display:inline-block;border-radius: 5px;padding-left:0px;}
+  .ullicss li{float:left;width:110px; height:42px;border: 1px solid #E6E6E6;}
+  .ullicss a  {color:#2FA4E7; font-weight:bold;line-height:40px;display:block; text-align:center;text-decoration:none;background:#FFFFFF;}
+  .ullicss a:link   { font-weight:bold;display:block; text-align:center;text-decoration:none;background:#FFFFFF;}
+  .ullicss a:visited{ font-weight:bold;display:block; text-align:center;text-decoration:none;background:#FFFFFF;}
+  .ullicss a:hover  { font-size:16px;background:#EEEEEE;}
+</style>
+</head>
+<body>
+	<!-- topbar starts -->
+	<#include "commonPage/top.ftl">
+	<!-- topbar ends -->
+	<div class="ch-container">
+		<div class="row">
+
+			<!-- left menu starts -->
+			<#include "commonPage/left.ftl">
+			<!--/span-->
+			<!-- left menu ends -->
+
+			<noscript>
+				<div class="alert alert-block col-md-12">
+					<h4 class="alert-heading">Warning!</h4>
+
+					<p>
+						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+							target="_blank">JavaScript</a> enabled to use this site.
+					</p>
+				</div>
+			</noscript>
+
+			<div id="content" class="col-lg-10 col-sm-10">
+				<!-- content starts -->
+				<div></div>
+
+				<!--/学生基本信息显示-->
+				<div class="row">
+					<div class="box col-md-12">
+						<div class="box-inner">
+							<div class="box-header well" data-original-title="">
+								<h2 >
+									<i class="glyphicon glyphicon-user"></i> ${student.stuname!''}的基本背景信息
+									<input type="hidden" value="${student.s_id!}" id="s_id">
+								</h2>
+							</div>
+						<!-- 学生基本信息开始 -->
+						 <div style="color:#447EAC;margin-left:3%;height:35px;line-height:35px;">
+			                       	<b>学生基本信息</b>
+			             </div>
+						 <table id="example" style="border:1px #dddddd solid;"  class="table"> 
+									<tbody>
+										<tr>
+											<td class="td_name">学号:</td>
+											<td class="td_value">${student.sno!''}</td>
+											<td class="td_name">性别:</td>
+											<td class="td_value">${student.stusex!''}</td>
+											<td class="td_name">班级:</td>
+											<td class="td_value">${student.simpleName!''} ${student.cname!''}</td>
+										</tr>
+										<tr>
+											<td class="td_name">籍贯:</td>
+											<td class="td_value">${student.position!''}</td>
+											<td class="td_name">政治面貌:</td>
+											<td class="td_value">${student.face!''}</td>
+											<td class="td_name">家庭联系方式:</td>
+											<td class="td_value">${student.contact_1!''}  &nbsp  &nbsp ${student.contact_1!''}</td>
+										</tr>
+										
+										<tr>
+											<td class="td_name">宿舍号:</td>
+											<td class="td_value">${student.dorm!''}</td>
+											<td class="td_name">高考成绩:</td>
+											<td class="td_value">${student.highgrade!''}</td>
+											<td class="td_name">是否单亲:</td>
+											 <#if student.single_parent==1>
+											<td class="td_value">是</td>
+											<#else >
+											<td class="td_value">否</td>
+											</#if>
+										</tr>
+										
+									</tbody>
+								</table>
+						<!-- 学生基本信息结束 -->
+						<!-- 学生背景信息 -->
+						 <div style="color:#447EAC;margin-left:3%;height:35px;line-height:35px;">
+			                       	<b>学生学期资料</b>
+			            </div>
+			           <#if (termList?size > 0)>
+			            	 <div class="ullicss">
+						        <ul>
+						        <#list termList as term>
+						            <li><a  href="javascript:;" value="${term}">${term}</a></li>
+						            </#list>
+						        </ul>
+							</div>
+						 <table id="backgroundInfo" style="border:1px #dddddd solid;"  class="table"> 
+									<tbody>
+										<tr>
+											<td class="td_name">是否获得助学贷款:</td>
+											<td class="td_value" colspan="2" id="ifload">${ifload!''}</td>
+											<td class="td_name">是否有勤工助学岗位:</td>
+											<td class="td_value" colspan="2" id="ifzhuxue">${ifzhuxue!''}</td>
+										</tr>
+										<tr>
+											<td class="td_name" >是否为优秀班干:</td>
+											<td class="td_value" id="ifyougan">${ifyougan!''}</td>
+											<td class="td_name">是否为三好学生:</td>
+											<td class="td_value" id="ifsanhao">${ifsanhao!''}</td>
+											<td class="td_name">是否为优秀团员:</td>
+											<td class="td_value" id="ifyoutuan">${ifyoutuan!''}</td>
+										</tr>
+										<tr>
+											<td class="td_name" >是否有专升本意向:</td>
+											<td class="td_value" id="ifupgraded">${ifupgraded!''}</td>
+											<td class="td_name">是否有欧美留学意向:</td>
+											<td class="td_value" id="ifoverseas">${ifoverseas!''}</td>
+											<td class="td_name">是否有韩国留学意向:</td>
+											<td class="td_value" id="ifkorea">${ifkorea!''}</td>
+										</tr>
+										<tr>
+											<td class="td_name">学期学分绩点:</td>
+											<td class="td_value" id="gradepoint">${info.gradepoint!''}</td>
+											<td class="td_name">学期不及格门数</td>
+											<td class="td_value" id="gatecount">${info.gatecount}</td>
+											<td class="td_name">学期综合素质排名</td>
+											<td class="td_value" id="ranking">${info.ranking}</td>
+										</tr>
+										<tr>
+											<td class="td_name">学期旷课学时:</td>
+											<td class="td_value" colspan="2" id="absent">${info.absent!''}</td>
+											<td class="td_name">学期夜不归宿次数:</td>
+											<td class="td_value" colspan="2" id="nightout">${info.nightout!''}</td>
+										</tr>
+										<tr >
+										<td class="td_name">学生干部任职情况:</td>
+										<td class="td_value" colspan="5"  id="takeoffice">${info.takeoffice!''}</td>
+										</tr>
+										<tr >
+										<td class="td_name">学期贫困认定情况:</td>
+										<td class="td_value" colspan="5"  id="poolstu">${info.poolstu!''}</td>
+										</tr>
+										<tr >
+										<td class="td_name">历次违纪处分记录:</td>
+										<td class="td_value" colspan="5" id="punish" >${info.punish!''}  </td>
+										</tr>
+										<tr >
+										<td class="td_name">本学期获得校外荣誉:</td>
+										<td class="td_value" colspan="5" id="outsidehonor" >${info.outsidehonor}</td>
+										</tr>
+										<tr >
+										<td class="td_name">本学期获得校级荣誉:</td>
+										<td class="td_value" colspan="5" id="schoolhonor" >${info.schoolhonor}</td>
+										</tr>
+										<td class="td_name">本学期获院级荣誉:</td>
+										<td class="td_value" colspan="5" id="collegehonor" >${info.collegehonor}</td>
+										</tr>
+									</tbody>
+								</table>
+								<!-- 学生背景信息结束 --> 
+			            
+			            <#else >
+			           		<div>
+			              
+			              	<p>该学生还没有上传学期资料</p>
+						     
+							</div>
+			            </#if>
+					</div>
+					<!--/span-->
+
+				</div>
+				<!--/row-->
+
+
+
+				<!-- content ends -->
+			</div>
+			<!--/#content.col-md-0-->
+		</div>
+		<!--/fluid-row-->
+
+		<!-- Ad, you can remove it -->
+
+		<!-- Ad ends -->
+
+		<hr>
+
+
+
+
+
+	</div>
+	<!--/.fluid-container-->
+
+	<!-- external javascript -->
+
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src='bower_components/moment/min/moment.min.js'></script>
+	<script src='bower_components/fullcalendar/dist/fullcalendar.min.js'></script>
+	<script src="bower_components/chosen/chosen.jquery.min.js"></script>
+	<script src="bower_components/colorbox/jquery.colorbox-min.js"></script>
+	<script src="js/jquery.noty.js"></script>
+	<script src="bower_components/responsive-tables/responsive-tables.js"></script>
+	<script	src="bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
+	<script src="js/jquery.raty.min.js"></script>
+	<script src="js/jquery.iphone.toggle.js"></script>
+	<script src="js/jquery.autogrow-textarea.js"></script>
+	<script src="js/jquery.uploadify-3.1.min.js"></script>
+	<script src="js/jquery.history.js"></script>
+	<script src="js/charisma.js"></script>  
+<script type="text/javascript">
+		  $(".ullicss a").click(function(){
+			  $(".ullicss a").css("background", "#FFFFFF"); 
+			  $(".ullicss a").css("color", "#2FA4E7"); 
+			  $(this).css("background", "#2FA4E7"); 
+			  $(this).css("color", "#FFFFFF"); 
+			  var s_id = $("#s_id").val();
+			  var termdate = $(this).attr("value");
+			  $.ajax({
+					type : "post",
+					url : "stu/stuTermInfo",
+					data : {
+						s_id : s_id,
+						termdate : termdate
+					},
+					dataType : "json",
+					success : function(data) {
+						//这里只返回学期资料，不会返回学生基本信息
+						$("#ifload").text(data.data.ifload);
+						$("#ifzhuxue").text(data.data.ifzhuxue);
+						$("#ifyougan").text(data.data.ifyougan);
+						$("#ifyoutuan").text(data.data.ifyoutuan);
+						$("#ifsanhao").text(data.data.ifsanhao);
+						$("#ifupgrade").text(data.data.ifupgrade);
+						$("#ifoverseas").text(data.data.ifoverseas);
+						$("#iforea").text(data.data.iforea);
+						$("#takeoffice").text(data.data.takeoffice);
+						$("#gradepoint").text(data.data.gradeopint);						
+						$("#gatecount").text(data.data.gatecount);
+						$("#poolstu").text(data.data.poolstu);
+						$("#ranking").text(data.data.ranking);
+						$("#absent").text(data.data.absent);
+						$("#nightout").text(data.data.nightout);
+						$("#punish").text(data.data.punish);
+						$("#outsidehonor").text(data.data.outsidehonor);
+						$("#schoolhonor").text(data.data.schoolhonor);
+						$("#collegehonor").text(data.data.collegehonor);
+						
+					}
+				}); 
+		  })
+	</script>
+</body>
+</html>

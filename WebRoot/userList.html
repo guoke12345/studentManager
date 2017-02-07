@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="${contextPath}/" />
+<meta charset="utf-8">
+<title>国际学院学生数据管理</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description"
+	content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+<meta name="author" content="Muhammad Usman">
+<!-- The styles -->
+<link id="bs-css" href="css/bootstrap-cerulean.min.css" rel="stylesheet">
+<link href="css/charisma-app.css" rel="stylesheet">
+<link href='bower_components/fullcalendar/dist/fullcalendar.css' rel='stylesheet'>
+<link href='bower_components/fullcalendar/dist/fullcalendar.print.css' rel='stylesheet' media='print'>
+<link href='bower_components/chosen/chosen.min.css' rel='stylesheet'>
+<link href='bower_components/colorbox/example3/colorbox.css' rel='stylesheet'>
+<link href='bower_components/responsive-tables/responsive-tables.css' rel='stylesheet'>
+<link href='bower_components/bootstrap-tour/build/css/bootstrap-tour.min.css' rel='stylesheet'>
+<link href='css/jquery.noty.css' rel='stylesheet'>
+<link href='css/noty_theme_default.css' rel='stylesheet'>
+<link href='css/elfinder.min.css' rel='stylesheet'>
+<link href='css/elfinder.theme.css' rel='stylesheet'>
+<link href='css/jquery.iphone.toggle.css' rel='stylesheet'>
+<link href='css/jquery.dataTables.min.css' rel='stylesheet'>
+<link href='css/uploadify.css' rel='stylesheet'>
+<link href='css/animate.min.css' rel='stylesheet'>
+<!-- jQuery -->
+<script src="bower_components/jquery/jquery.min.js"></script>
+
+<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<!-- The fav icon -->
+<link rel="shortcut icon" href="img/favicon.ico">
+
+<style type="text/css">
+	table.dataTable thead td {
+		padding: 10px 18px;
+		border-bottom: 1px solid #111111;
+	}
+	
+	table.dataTable tfoot th, table.dataTable tfoot td {
+		padding: 10px 18px 6px 18px;
+		border-top: 1px solid #111111;
+	}
+	
+	table.dataTable.no-footer {
+		border-bottom: 1px solid #111111;
+	}
+	
+	.dataTables_wrapper.no-footer .dataTables_scrollBody {
+		border-bottom: 1px solid #111111;
+	}
+</style>
+</head>
+
+<body>
+	<!-- topbar starts -->
+	<#include "commonPage/top.ftl">
+	<!-- topbar ends -->
+	<div class="ch-container">
+		<div class="row">
+
+			<!-- left menu starts -->
+			<#include "commonPage/left.ftl">
+			<!--/span-->
+			<!-- left menu ends -->
+
+			<noscript>
+				<div class="alert alert-block col-md-12">
+					<h4 class="alert-heading">Warning!</h4>
+
+					<p>
+						You need to have <a href="http://en.wikipedia.org/wiki/JavaScript"
+							target="_blank">JavaScript</a> enabled to use this site.
+					</p>
+				</div>
+			</noscript>
+
+			<div id="content" class="col-lg-10 col-sm-10">
+				<!-- content starts -->
+				<div></div>
+
+				<!--/学生基本信息显示-->
+				<div class="row">
+					<div class="box col-md-12">
+						<div class="box-inner">
+							<div class="box-header well" data-original-title="">
+								<h2>
+									<i class="glyphicon glyphicon-user"></i> 用户信息
+								</h2>
+							</div>
+							<div class="box-content">
+							<a class="btn btn-success" style="margin-left:90%;" href="user/toAddUser"> <i	class="glyphicon glyphicon-plus icon-white"></i> 添加管理员</a><br><br>
+							<table id="example" style="border:1px #dddddd solid;"  class="table table-striped table-bordered  bootstrap-datatable responsive"> 
+									<thead>
+										<tr>
+											<th style="width:60px;">序号</th>
+											<th>用户名</th>
+											<th>权限</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<#list userList as list>
+										<tr>
+											<td>${list_index+1!}</td>
+											<td class="center">${list.username!}</td>
+											<td class="center">
+												<#if list.state == 0 >
+													<span class="label label-danger">超级管理员</span>
+												<#else>
+													<span class="label label-success">普通管理员</span>
+												</#if>
+											</td>
+											<td class="center" style="width:300px;">
+												<a class="btn btn-info" href="javascript:resetPass(${list.Id!});">
+													 <i class="glyphicon glyphicon-edit icon-white"></i> 重置密码
+												</a> 
+												<a class="btn btn-danger" href="javascript:deleteUser(${list.Id!});">
+													<i class="glyphicon glyphicon-trash icon-white"></i> 删除
+												</a>
+											</td>
+										</tr>
+										</#list>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!--/span-->
+
+				</div>
+				<!--/row-->
+
+
+				<!-- content ends -->
+			</div>
+			<!--/#content.col-md-0-->
+		</div>
+		<!--/fluid-row-->
+
+		<!-- Ad, you can remove it -->
+
+		<!-- Ad ends -->
+
+		<hr>
+
+
+
+
+
+	</div>
+	<!--/.fluid-container-->
+
+	<!-- external javascript -->
+
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+	<script src='bower_components/moment/min/moment.min.js'></script>
+	<script src='bower_components/fullcalendar/dist/fullcalendar.min.js'></script>
+	<script src='js/jquery.dataTables.min.js'></script>
+	<script src="bower_components/chosen/chosen.jquery.min.js"></script>
+	<script src="bower_components/colorbox/jquery.colorbox-min.js"></script>
+	<script src="js/jquery.noty.js"></script>
+	<script src="bower_components/responsive-tables/responsive-tables.js"></script>
+	<script	src="bower_components/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>
+	<script src="js/jquery.raty.min.js"></script>
+	<script src="js/jquery.iphone.toggle.js"></script>
+	<script src="js/jquery.autogrow-textarea.js"></script>
+	<script src="js/jquery.uploadify-3.1.min.js"></script>
+	<script src="js/jquery.history.js"></script>
+	<script src="js/charisma.js"></script>  
+	<script type="text/javascript">
+	/* 
+	*删除用户
+	*/
+	function deleteUser(id){
+		if(confirm("确定要删除用户么?")){
+			window.location.href = "user/deleteUser?id="+id;
+		}
+	}
+	
+	$(document).ready(function() {
+		 $("#example").dataTable({
+			 "language": {
+				 "url" : "commonPage/language.txt",
+			    },
+		 });
+	 } ); 
+	/* 
+	*重置密码 
+	*/
+	function resetPass(id){
+		if(confirm("确定要重置密码么?")){
+			$.ajax({
+				url:"user/resetPass",
+				type:"post",
+				data:{
+					id : id
+				},
+				dataType:"json",
+				success : function(data){
+					alert(data.message);
+				}
+			});
+		}
+	}
+	
+	</script>
+</body>
+</html>
